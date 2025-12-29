@@ -81,9 +81,9 @@ pip install requirements.txt
 python main.py add_paper "CLIP.pdf" --topics "Trajectory Prediction, Domain Generalization, Diffusion Model, Pose Estimation, Large Language Model"
 ```
 
-![image-20251229074609589](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229074609589.png)
+![image-20251229074609589](typora-user-images\image-20251229074609589.png)
 
-![image-20251229074740030](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229074740030.png)
+![image-20251229074740030](typora-user-images\image-20251229074740030.png)
 
 #### 2. 批量整理文件夹
 
@@ -95,9 +95,9 @@ python main.py add_paper "CLIP.pdf" --topics "Trajectory Prediction, Domain Gene
 python main.py organize "./downloads" --topics "Trajectory Prediction, Domain Generalization, Diffusion Model, Pose Estimation, Large Language Model"
 ```
 
-![image-20251229085425202](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229085425202.png)
+![image-20251229085425202](typora-user-images\image-20251229085425202.png)
 
-![image-20251229085449057](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229085449057.png)
+![image-20251229085449057](typora-user-images\image-20251229085449057.png)
 
 #### 3. 语义搜索论文
 
@@ -107,7 +107,7 @@ python main.py organize "./downloads" --topics "Trajectory Prediction, Domain Ge
 python main.py search_paper "How does self-attention work?"
 ```
 
-![image-20251229085624627](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229085624627.png)
+![image-20251229085624627](typora-user-images\image-20251229085624627.png)
 
 #### 4. 建立图片索引
 
@@ -119,7 +119,7 @@ python main.py search_paper "How does self-attention work?"
 python main.py index_images "./my_photos"
 ```
 
-![image-20251229100533334](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229100533334.png)
+![image-20251229100533334](typora-user-images\image-20251229100533334.png)
 
 #### 5. 以文搜图
 
@@ -129,7 +129,7 @@ python main.py index_images "./my_photos"
 python main.py search_image "a white cat"
 ```
 
-![image-20251229101048950](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229101048950.png)
+![image-20251229101048950](typora-user-images\image-20251229101048950.png)
 
 ### 5.2 交互模式 (推荐)
 #### 1. **启动交互模式**
@@ -138,7 +138,7 @@ python main.py search_image "a white cat"
 python main.py interactive
 ```
 
-![image-20251229101357454](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229101357454.png)
+![image-20251229101357454](typora-user-images\image-20251229101357454.png)
 
 #### 2. 语义搜索论文
 
@@ -148,7 +148,7 @@ python main.py interactive
 search_paper "how to predict trajectory?"
 ```
 
-![image-20251229101640529](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229101640529.png)
+![image-20251229101640529](typora-user-images\image-20251229101640529.png)
 
 #### 3. 以文搜图
 

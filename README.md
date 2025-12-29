@@ -1,14 +1,24 @@
-# 本地 AI 智能文献与图像管理助手 (Local Multimodal AI Agent)
+# 本地多模态 AI 智能助手 (Local Multimodal AI Agent)
 
 ## 1. 项目简介 (Project Introduction)
-本项目是一个基于 Python 的本地多模态 AI 智能助手，旨在解决本地大量文献和图像素材管理困难的问题。不同于传统的文件名搜索，本项目利用多模态神经网络技术，实现对内容的**语义搜索**和**自动分类**。本项目可以帮助各位同学理解多模态大模型的实际应用，并且可以在实际日常学习生活中帮助各位同学管理自己的本地知识库。希望各位同学可以不局限于本次作业规定的内容，通过自己的构建、扩展和维护实现自己的本地AI助手。
+项目GitHub地址：[yilimi02/Local-Multimodal-AI-Agent](https://github.com/yilimi02/Local-Multimodal-AI-Agent?tab=readme-ov-file#本地-ai-智能文献与图像管理助手-local-multimodal-ai-agent)
 
-项目可使用本地化部署，也可以调用云端大模型 API 以获得更强的性能。
+使用测试文件：https://pan.baidu.com/s/1qVs_6oS3cIksUo1yGPiMNA?pwd=m4qj
+
+本项目是一个基于 Python 的本地化多模态 AI 助手，旨在帮助用户高效管理本地的**学术文献 (PDF)** 和 **图像素材**。
+
+不同于传统的文件名搜索，本项目利用 **SentenceTransformers** 和 **CLIP** 模型，将文本和图像转化为向量存储在本地的 **ChromaDB** 数据库中，实现了：
+
+- **语义搜索**：用自然语言（如“Transformer 的核心架构”）搜索相关论文。
+- **以文搜图**：用文字描述（如“海边的日落”）搜索本地图片。
+- **自动分类**：根据论文内容自动将其归档到对应主题的文件夹。
+
+> **特点**：所有数据和模型均在本地运行，保护隐私，无需联网上传数据（模型下载除外）。代码内置了国内镜像源加速，解决了 HuggingFace 连接困难的问题。
 
 ## 2. 核心功能要求 (Core Features)
 
 ### 2.1 智能文献管理
-*   **语义搜索**: 支持使用自然语言提问（如“Transformer 的核心架构是什么？”）。系统需基于语义理解返回最相关的论文文件，进阶要求可返回具体的论文片段或页码。
+*   **语义搜索**: 支持使用自然语言提问（如“Transformer 的核心架构是什么？”）。系统基于语义理解返回最相关的论文文件。
 *   **自动分类与整理**:
     *   **单文件处理**: 添加新论文时，根据指定的主题（如 "CV, NLP, RL"）自动分析内容，将其归类并移动到对应的子文件夹中。
     *   **批量整理**: 支持对现有的混乱文件夹进行“一键整理”，自动扫描所有 PDF，识别主题并归档到相应目录。
@@ -17,121 +27,135 @@
 ### 2.2 智能图像管理
 *   **以文搜图**: 利用多模态图文匹配技术，支持通过自然语言描述（如“海边的日落”）来查找本地图片库中最匹配的图像。
 
-## 3. 技术选型与模型建议 (Technical Stack)
+## 3. 技术选型与模型 (Technical Stack)
 
-本项目采用模块化设计，支持替换不同的后端模型。学生可根据自身硬件条件选择本地部署或调用云端 API（如 Gemini, GPT-4o 等）。
+本项目采用了轻量级且高效的模块化设计：
 
-### 3.1 推荐配置 (轻量级/本地化)
-*   **文本嵌入**: `SentenceTransformers` (如 `all-MiniLM-L6-v2`) —— 速度快，内存占用小。
-*   **图像嵌入**: `CLIP` (如 `ViT-B-32`) —— OpenAI 开源的经典图文匹配模型。
-*   **向量数据库**: `ChromaDB` —— 无需服务器，开箱即用的嵌入式数据库。
-
-### 3.2 进阶配置建议 (高性能/多功能)
-如果您拥有较好的硬件资源（如 NVIDIA GPU），可以尝试以下方案：
-
-*   **图像描述与问答**:
-    *   **Florence-2 (Microsoft)**: 轻量级全能视觉模型，支持 OCR、检测、描述。
-    *   **Moondream**: 专为边缘设备设计的小型视觉语言模型。
-    *   **LLaVA**: 开源多模态大模型，支持复杂的图文对话。
-*   **文本理解**:
-    *   **本地 LLM**: 如 `Llama-3` 或 `Qwen-2` (通过 Ollama 部署)，实现更精准的分类。
+- **文本嵌入模型**: `all-MiniLM-L6-v2`
+  - 速度快，内存占用小，适合普通笔记本运行。
+- **图像嵌入模型**: `clip-ViT-B-32` (OpenAI CLIP)
+  - 经典的图文对齐模型，能够理解图像与文本之间的语义关联。
+- **向量数据库**: `ChromaDB`
+  - 嵌入式数据库，无需安装服务器，数据保存在本地 `./chroma_db` 目录。
+- **PDF 处理**: `pdfplumber`
+  - 提取 PDF 前 5 页的文本（摘要和引言通常在此），兼顾速度与准确性。
 
 ## 4. 环境要求 (Environment)
+
+### 4.1 基础要求
 
 *   **操作系统**: Windows / macOS / Linux
 *   **Python 版本**: 建议 Python 3.8 及以上
 *   **内存**: 建议 8GB 及以上
 
-## 5. 作业提交要求 (Submission Guidelines)
+### 4.2 安装依赖
 
-为规范作业提交与评测流程，请严格按照以下要求提交：
+项目依赖文件已整理，请在终端运行以下命令安装所需库（推荐使用国内源加速）：
 
-### 5.1 代码提交
-*   **GitHub 仓库**: 将完整项目代码上传至 GitHub 个人仓库，并提交仓库链接。
-*   **README 文档**: 仓库首页必须包含详细的 `README.md`，内容包括：
-    *   项目简介与核心功能列表。
-    *   环境配置与依赖安装说明。
-    *   **详细的使用说明**（包含具体的命令行示例）。
-    *   技术选型说明（使用了哪些模型、数据库等）。
+```python
+pip install requirements.txt
+```
 
-### 5.2 评测接口规范
-*   **统一入口**: 项目根目录下必须包含 `main.py` 文件。
-*   **一键调用**: 必须支持通过命令行参数调用核心功能。参考格式如下（不仅限于此）：
-    *   添加/分类论文: `python main.py add_paper <path> --topics "Topic1,Topic2"`
-    *   搜索论文: `python main.py search_paper <query>`
-    *   以文搜图: `python main.py search_image <query>`
+**依赖库说明：**
 
-### 5.3 演示文档
-请提交一份 PDF 格式的演示报告（或直接包含在 README 中），内容需包括：
-*   **运行截图**: 关键功能的运行结果截图（如搜索结果、分类后的文件夹结构）。
-*   **演示视频 (可选)**: 录制一段屏幕录像，演示从环境启动到功能使用的全过程。
+- `chromadb`: 向量数据库，用于存储和检索向量。
+- `sentence-transformers`: 加载文本和图像嵌入模型。
+- `pdfplumber`: 用于提取 PDF 中的文本。
+- `Pillow`: 图像处理库。
+- `torch`: 深度学习框架后端。
 
----
+## 5. 使用说明
 
-# Local Multimodal AI Agent (English Version)
+项目提供了两种使用方式： **单次命令模式** 和 **交互模式（推荐）** 。
 
-## 1. Project Introduction
-This project is a Python-based local multimodal AI assistant designed to solve the difficulty of managing large collections of local documents and images. Unlike traditional filename-based searches, this project utilizes multimodal neural network technology to achieve **semantic search** and **automatic classification** of content.
+确保你的终端位于项目根目录下（即 `main.py` 所在目录）。
 
-The project is designed to be flexible, supporting both fully offline local deployment (for privacy) and cloud-based large model API integration for enhanced performance.
+### 5.1 方式一：单次命令行工具
+#### 1. 添加并分类单篇论文
 
-## 2. Core Features
+将 PDF 文件索引到数据库，并根据主题自动移动到 `my_papers/` 文件夹。
 
-### 2.1 Intelligent Document Management
-*   **Semantic Search**: Supports natural language queries (e.g., "What is the core architecture of Transformer?"). The system should return the most relevant paper documents based on semantic understanding. Advanced implementations can return specific snippets or page numbers.
-*   **Automatic Classification & Organization**:
-    *   **Single File Processing**: When adding a new paper, the system automatically analyzes the content based on specified topics (e.g., "CV, NLP, RL") and moves it to the corresponding subfolder.
-    *   **Batch Organization**: Supports "one-click organization" for existing messy folders, automatically scanning all PDFs, identifying topics, and archiving them into appropriate directories.
-*   **File Indexing**: Supports returning only a list of relevant files for quick location.
+示例：
 
-### 2.2 Intelligent Image Management
-*   **Text-to-Image Search**: Utilizes multimodal text-image matching technology to allow users to find the best-matching images in the local library using natural language descriptions (e.g., "sunset by the sea").
+```
+python main.py add_paper "CLIP.pdf" --topics "Trajectory Prediction, Domain Generalization, Diffusion Model, Pose Estimation, Large Language Model"
+```
 
-## 3. Technical Stack & Recommendations
+![image-20251229074609589](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229074609589.png)
 
-This project adopts a modular design, allowing for the replacement of different backend models. Students can choose between local deployment or calling cloud APIs (such as Gemini, GPT-4o) based on their hardware conditions.
+![image-20251229074740030](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229074740030.png)
 
-### 3.1 Recommended Configuration (Lightweight/Local)
-*   **Text Embedding**: `SentenceTransformers` (e.g., `all-MiniLM-L6-v2`) — Fast speed, low memory usage.
-*   **Image Embedding**: `CLIP` (e.g., `ViT-B-32`) — OpenAI's classic open-source text-image matching model.
-*   **Vector Database**: `ChromaDB` — Serverless, out-of-the-box embedded database.
+#### 2. 批量整理文件夹
 
-### 3.2 Advanced Configuration (High Performance)
-If you have better hardware resources (such as NVIDIA GPUs), consider the following options:
+扫描指定文件夹中的所有 PDF，自动分类并移动到 `my_papers/`。
 
-*   **Image Captioning & QA**:
-    *   **Florence-2 (Microsoft)**: Lightweight yet powerful vision model supporting OCR, detection, and captioning.
-    *   **Moondream**: Small vision-language model designed for edge devices.
-    *   **LLaVA**: Open-source multimodal large model supporting complex image-text dialogue.
-*   **Text Understanding**:
-    *   **Local LLM**: Such as `Llama-3` or `Qwen-2` (deployed via Ollama) for more precise classification.
+示例：
 
-## 4. Environment Requirements
+```python
+python main.py organize "./downloads" --topics "Trajectory Prediction, Domain Generalization, Diffusion Model, Pose Estimation, Large Language Model"
+```
 
-*   **OS**: Windows / macOS / Linux
-*   **Python Version**: Recommended Python 3.8+
-*   **Memory**: Recommended 8GB+ (for loading basic Embedding models)
+![image-20251229085425202](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229085425202.png)
 
-## 5. Submission Guidelines
+![image-20251229085449057](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229085449057.png)
 
-To standardize the submission and evaluation process, please strictly follow these requirements:
+#### 3. 语义搜索论文
 
-### 5.1 Code Submission
-*   **GitHub Repository**: Upload the complete project code to a personal GitHub repository and submit the link.
-*   **README**: The repository homepage must include a detailed `README.md` containing:
-    *   Project introduction and core feature list.
-    *   Environment configuration and dependency installation instructions.
-    *   **Detailed usage instructions** (including specific command-line examples).
-    *   Technical stack explanation (models, databases used, etc.).
+示例：
 
-### 5.2 Evaluation Interface Specification
-*   **Unified Entry Point**: The project root directory must contain a `main.py` file.
-*   **One-Click Execution**: Core features must be callable via command-line arguments. Reference format (not limited to):
-    *   Add/Classify Paper: `python main.py add_paper <path> --topics "Topic1,Topic2"`
-    *   Search Paper: `python main.py search_paper <query>`
-    *   Search Image: `python main.py search_image <query>`
+```python
+python main.py search_paper "How does self-attention work?"
+```
 
-### 5.3 Demonstration Documentation
-Please submit a PDF demonstration report (or include it in the README), which must include:
-*   **Screenshots**: Screenshots of key function results (e.g., search results, folder structure after classification).
-*   **Demo Video (Optional)**: Record a screen capture video demonstrating the entire process from environment startup to feature usage.
+![image-20251229085624627](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229085624627.png)
+
+#### 4. 建立图片索引
+
+扫描指定文件夹下的图片（.jpg, .png 等），建立向量索引。
+
+示例：
+
+```python
+python main.py index_images "./my_photos"
+```
+
+![image-20251229100533334](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229100533334.png)
+
+#### 5. 以文搜图
+
+示例：
+
+```python
+python main.py search_image "a white cat"
+```
+
+![image-20251229101048950](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229101048950.png)
+
+### 5.2 交互模式 (推荐)
+#### 1. **启动交互模式**
+
+```python
+python main.py interactive
+```
+
+![image-20251229101357454](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229101357454.png)
+
+#### 2. 语义搜索论文
+
+示例：
+
+```python
+search_paper "how to predict trajectory?"
+```
+
+![image-20251229101640529](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229101640529.png)
+
+#### 3. 以文搜图
+
+示例：
+
+```python
+search_image "一只鸟"
+```
+
+![image-20251229102653254](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229102653254.png)

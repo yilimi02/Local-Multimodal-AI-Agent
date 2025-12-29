@@ -158,4 +158,4 @@ search_paper "how to predict trajectory?"
 search_image "一只鸟"
 ```
 
-![image-20251229102653254](C:\Users\haperay\AppData\Roaming\Typora\typora-user-images\image-20251229102653254.png)
+![image-20251229102653254](typora-user-images/image-20251229102653254.png)
